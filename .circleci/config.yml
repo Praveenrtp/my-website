@@ -70,35 +70,35 @@ deploy-to-aws-cloudFront:
         name: Show current branch
         command: echo ${CIRCLE_BRANCH}
       - run:
-        name: Installing AWS CLI
-        working_directory: /
-        command: |
-          sudo apt-get -y -qq update
-          sudo apt-get install -y aswcli
-          sudo apt-get-install -y python-pip python-dev build-essential
+         name: Installing AWS CLI
+         working_directory: /
+         command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install -y aswcli
+            sudo apt-get-install -y python-pip python-dev build-essential
       - run:
-        name: Build Project
-        command: |
-          npm install
-          npm run build
-          cd build
-          zip ../built.zip -r * .[^.]*
-          echo "Build Succesful"
+          name: Build Project
+          command: |
+            npm install
+            npm run build
+            cd build
+            zip ../built.zip -r * .[^.]*
+            echo "Build Succesful"
       - run:
-        name: Deploy to AWS CloudFront
-        command: |
-          aws configure set preview.cloudfront
-          if [ "${CIRCLE_BRANCH"] == "master" ]
-          then
-            aws cloudfront create-invalidation --distribution-id ${PRODUCTION_DISTRIBUTION_ID} --paths /\* 
-          elif [ "${CIRCLE_BRANCH"] == "staging" ]
-          then
-            aws cloudfront create-invalidation --distribution-id ${STAGING_DISTRIBUTION_ID} --paths /\* 
-          else 
-          then
-            aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths /\* 
-          fi
-        
+          name: Deploy to AWS CloudFront
+          command: |
+            aws configure set preview.cloudfront
+            if [ "${CIRCLE_BRANCH"] == "master" ]
+            then
+             aws cloudfront create-invalidation --distribution-id ${PRODUCTION_DISTRIBUTION_ID} --paths /\* 
+            elif [ "${CIRCLE_BRANCH"] == "staging" ]
+            then
+             aws cloudfront create-invalidation --distribution-id ${STAGING_DISTRIBUTION_ID} --paths /\* 
+            else 
+            then
+             aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths /\* 
+            fi
+         
 workflows:
   build_and_deploy:
     jobs:
