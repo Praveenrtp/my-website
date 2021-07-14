@@ -28,8 +28,8 @@ jobs:
           working_directory: /
           command: |
             sudo apt-get -y -qq update
-            sudo apt-get install -y aswcli
-            sudo apt-get install -y python-pip python-dev build-essential
+            sudo pip install -y aswcli
+            sudo pip install -y python-pip python-dev build-essential
       - run:
           name: Build Project
           command: |
