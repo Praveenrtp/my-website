@@ -102,22 +102,22 @@ workflows:
     jobs:
       - build
       - deploy-to-aws-s3:
-        requires: 
-          - build
-        filters: 
-          branches:
-            only:
-              - develop
-              - staging
-              - master
+          requires: 
+            - build
+          filters: 
+            branches:
+              only:
+                - develop
+                - staging
+                - master
       - deploy-to-aws-cloudFront:
-        requires: 
-          - deploy-to-aws-s3
-        filters: 
-          branches:
-            only:
-              - develop
-              - staging
-              - master
+          requires: 
+            - deploy-to-aws-s3
+          filters: 
+            branches:
+              only:
+                - develop
+                - staging
+                - master
 
      
