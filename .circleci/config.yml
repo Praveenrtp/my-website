@@ -27,26 +27,26 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Show current branch
-        command: echo ${CIRCLE_BRANCH}
+          name: Show current branch
+          command: echo ${CIRCLE_BRANCH}
       - run:
-        name: Installing AWS CLI
-        working_directory: /
-        command: |
-          sudo apt-get -y -qq update
-          sudo apt-get install -y aswcli
-          sudo apt-get-install -y python-pip python-dev build-essential
+          name: Installing AWS CLI
+          working_directory: /
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install -y aswcli
+            sudo apt-get-install -y python-pip python-dev build-essential
       - run:
-        name: Build Project
-        command: |
-          npm install
-          npm run build
-          cd build
-          zip ../built.zip -r * .[^.]*
-          echo "Build Succesful"
+          name: Build Project
+          command: |
+           npm install
+           npm run build
+           cd build
+           zip ../built.zip -r * .[^.]*
+           echo "Build Succesful"
       - run:
-        name: Deploy to AWS s3
-        command: |
+          name: Deploy to AWS s3
+          command: |
           if [ "${CIRCLE_BRANCH"] == "master" ]
           then
             aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_PRODUCTION} --delete
