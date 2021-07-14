@@ -6,9 +6,6 @@ jobs:
     working_directory: ~/repo
     steps:
         - checkout
-        - run:
-            name: Show current branch
-            command: echo ${CIRCLE_BRANCH}
         - restore_cache: 
             keys:
               - app-{{ checksum "package.json"}}
@@ -26,9 +23,6 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run:
-          name: Show current branch
-          command: echo ${CIRCLE_BRANCH}
       - run:
           name: Installing AWS CLI
           working_directory: /
@@ -64,9 +58,6 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run:
-        name: Show current branch
-        command: echo ${CIRCLE_BRANCH}
       - run:
          name: Installing AWS CLI
          working_directory: /
