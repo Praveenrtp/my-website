@@ -82,18 +82,22 @@ jobs:
             zip ../built.zip -r * .[^.]*
             echo "Build Succesful"
       - run:
-          name: Deploy to AWS CloudFront
+          name: activate cloud front
           command: |
             aws configure set preview.cloudfront true
             aws configure set preview.create-invalidation true
+
+      - run:
+          name: Deploy to AWS CloudFront
+          command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
-             aws cloudfront create-invalidation --distribution-id cp ${PRODUCTION_DISTRIBUTION_ID} --paths /\* 
+             aws cloudfront create-invalidation --distribution-id ${PRODUCTION_DISTRIBUTION_ID} --paths /\* 
             elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
-             aws cloudfront create-invalidation --distribution-id cp ${STAGING_DISTRIBUTION_ID} --paths /\* 
+             aws cloudfront create-invalidation --distribution-id  ${STAGING_DISTRIBUTION_ID} --paths /\* 
             else 
-             aws cloudfront create-invalidation --distribution-id cp ${DEV_DISTRIBUTION_ID} --paths /\* 
+             aws cloudfront create-invalidation --distribution-id  ${DEV_DISTRIBUTION_ID} --paths /\* 
             fi
          
 workflows:
