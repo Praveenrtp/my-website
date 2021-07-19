@@ -64,6 +64,16 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Show Current Branch
+          command: echo ${CIRCLE_BRANCH}
+      - run:
+          name: Installing AWS CLI
+          working_directory: /
+          command: |
+            sudo apt-get update
+            sudo apt-get install python3-pip python3-dev
+            sudo pip install awscli
+      - run:
           name: Build Project
           command: |
             npm install
@@ -82,7 +92,6 @@ jobs:
             then
              aws cloudfront create-invalidation --distribution-id ${STAGING_DISTRIBUTION_ID} --paths /\* 
             else 
-            then
              aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths /\* 
             fi
          
