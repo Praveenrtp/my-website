@@ -24,6 +24,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Installing AWS CLI
+          working_directory: /
+          command: |
+            sudo apt-get install python-pip python-dev
+            sudo pip install awscli
+      - run:
           name: Build Project
           command: |
            npm install
