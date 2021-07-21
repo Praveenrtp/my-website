@@ -29,8 +29,8 @@ aliases:
       working_directory: /
       command: |
         sudo apt-get update
-        sudo apt-get install python3-pip python3-dev
-        sudo pip install 
+        sudo apt-get install python3-pip3 python3-dev
+        sudo pip3 install 
   - &Build_Project
     run:
       name: Build Project
