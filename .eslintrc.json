@@ -15,7 +15,11 @@
     "parser": "babel-eslint",
     "parserOptions": {
       "sourceType": "module",
-      "allowImportExportEverywhere": true
+      "allowImportExportEverywhere": true,
+      "ecmaVersion": 2020,
+      "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+      }
     },
     "settings": {
       "react": {

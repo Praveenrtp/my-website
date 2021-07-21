@@ -57,6 +57,9 @@ jobs:
         - checkout
         - *show-current-branch-name
         - *restore_cache 
+        - run:
+            name: Install lint
+            command: npm install eslint --save-dev
         - run: 
             name: Run linting
             command: npm run lint
