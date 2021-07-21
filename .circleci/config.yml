@@ -29,7 +29,7 @@ aliases:
       working_directory: /
       command: |
         sudo apt-get update
-        sudo apt-get install python3-env python3-dev
+        sudo apt-get install python3-pipenv python3-dev
         sudo pipenv install 
   - &Build_Project
     run:
