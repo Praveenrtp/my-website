@@ -56,10 +56,7 @@ jobs:
     steps:
         - checkout
         - *show-current-branch-name
-        - *restore_cache
-        - node/install-packages:
-            cache-path: ~/project/node_modules
-            override-ci-command: npm install
+        - *restore_cache 
         - run: 
             name: Run linting
             command: npm run lint
