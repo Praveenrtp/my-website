@@ -30,7 +30,7 @@ aliases:
       command: |
         sudo apt-get update
         sudo apt-get install python3-pip python3-dev
-        sudo pip3 install 
+        sudo pip install 
   - &Build_Project
     run:
       name: Build Project
