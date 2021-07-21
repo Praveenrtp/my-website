@@ -50,12 +50,16 @@ jobs:
         - *restore_cache 
         - *install_dependencies
         - *save_cache
+        
   linting:  
     executor: app-executor
     steps:
         - checkout
         - *show-current-branch-name
         - *restore_cache
+        - node/install-packages:
+            cache-path: ~/project/node_modules
+            override-ci-command: npm install
         - run: 
             name: Run linting
             command: npm run lint
@@ -92,7 +96,6 @@ jobs:
           command: |
             aws configure set preview.cloudfront true
             aws configure set preview.create-invalidation true
-
       - run:
           name: Deploy to AWS CloudFront
           command: |
