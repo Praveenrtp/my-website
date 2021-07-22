@@ -226,14 +226,14 @@ jobs:
       - run:
           name: Terraform Plan
           command: |
-            cd artifactd Terraform/
+            cd artifacts Terraform/
             terraform init
             terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
             terraform plan
       - run:
           name: Terraform Apply
           command: |
-            cd artifactd Terraform/
+            cd artifacts Terraform/
             terraform workspace select ${CIRCLE_BRANCH}
             terraform apply --auto-approve
             terraform output mywebsite_bucket_name > ../mywebsite_bucket_name.txt
