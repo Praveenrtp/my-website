@@ -1,3 +1,5 @@
+orbs:
+  slack: circleci/slack@4.4.2
 version: 2.1
 executors:
   app-executor:
@@ -29,8 +31,8 @@ aliases:
       working_directory: /
       command: |
         sudo apt-get update
-        sudo apt-get install python3-pipenv python3-dev
-        sudo pipenv install 
+        sudo apt-get install python3-pip python3-dev
+        sudo pip install awscli
   - &Build_Project
     run:
       name: Build Project
@@ -120,7 +122,66 @@ jobs:
             else 
              aws cloudfront create-invalidation --distribution-id  ${DEV_DISTRIBUTION_ID} --paths /\* 
             fi
-         
+notify-via-slack:
+    executor: slack-executor
+    steps:
+      - run: echo "Slack notification"
+      - slack/notify:
+          event: 'always'
+          channel: 'cinema-app-circleci'
+          template: ''
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "${CIRCLE_BRANCH} branch deployment to aws s3 and cloudfront is complete. 👍",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project*:\n$CIRCLE_PROJECT_REPONAME"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch*:\n$CIRCLE_BRANCH"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*When*:\n$(date +'%m/%d/%Y %T')"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Build*:\n$CIRCLE_BUILD_NUM"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Author*:\n$CIRCLE_PROJECT_USERNAME"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View Job"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}"
+                    }
+                  ]
+                }
+              ]
+            }
+        
 workflows:
   build_and_deploy:
     jobs:
@@ -161,5 +222,12 @@ workflows:
                 - develop
                 - staging
                 - master
-
-     
+    - notify-via-slack:
+          requires:
+            - deploy-to-aws-cloudfront
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
