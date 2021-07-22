@@ -34,9 +34,9 @@ aliases:
       name: Installing AWS CLI
       working_directory: /
       command: |
-        sudo apt-get update
-        sudo apt-get install python3-pip python3-dev
-        sudo pip install awscli
+        sudo apt-get -y -qq update
+        sudo apt-get install -y awscli
+        sudo apt-get install -y python-pip python-dev build-essential
   - &Build_Project
     run:
       name: Build Project
