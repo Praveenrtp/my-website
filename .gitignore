@@ -28,11 +28,11 @@ yarn-error.log*
 
 ### Terraform ###
 # Local .terraform directories
-**/.terraform/*
+Terraform/.terraform/*
 
 # .tfstate files
-*.tfstate
-*.tfstate.*
+Terraform.tfstate
+Terraform.tfstate.*
 
 # Crash log files
 crash.log
@@ -42,14 +42,14 @@ crash.log
 # control as they are data points which are potentially sensitive and subject
 # to change depending on the environment.
 #
-*.tfvars
+Terraform.tfvars
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
+Terraform/override.tf
+Terraform/override.tf.json
+Terraform/*_override.tf
+Terraform/*_override.tf.json
 
 # Include override files you do wish to add to version control using negated pattern
 # !example_override.tf
