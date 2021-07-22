@@ -322,7 +322,7 @@ workflows:
                 - develop
                 - staging
                 - master
-       - hold:
+      - hold:
           type: approval
           requires:
             - deploy-to-aws-cloudfront
