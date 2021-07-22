@@ -3,10 +3,10 @@
 ################
 
 resource "aws_s3_bucket" "mywebsite_react" {
-  bucket = "${local.prefix}-app"
-  acl    = "public-read"
+  bucket        = "${local.prefix}-app"
+  acl           = "public-read"
   force_destroy = true
-  policy = <<EOF
+  policy        = <<EOF
   {
       "Version" = "2012-10-17",
       "Statement" = [
