@@ -267,19 +267,10 @@ workflows:
                 - develop
                 - staging
                 - master
-      - unit-test:
+      - terraform-validate:
           requires:
             - linting
             - prettier
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - master
-      - terraform-validate:
-          requires:
-            - unit-test
           filters:
             branches:
               only:
