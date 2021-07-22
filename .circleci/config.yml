@@ -107,7 +107,7 @@ jobs:
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_NAME} --delete
             fi
           
-  deploy-to-aws-cloudFront:
+  deploy-to-aws-cloudfront:
     executor: app-executor
     steps:
       - checkout
