@@ -1,4 +1,4 @@
-output "cinema_app_bucket_name" {
+output "mywebsite_bucket_name" {
   value = aws_s3_bucket.mywebsite_react.id
 }
 

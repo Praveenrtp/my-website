@@ -1,5 +1,5 @@
 variable "prefix" {
-    default =  = "mywebsite-react-rtp"
+    default = "mywebsite-react-rtp"
 }
 
 variable "project" {
