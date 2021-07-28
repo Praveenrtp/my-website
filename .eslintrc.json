@@ -37,7 +37,9 @@
         "no-return-assign": 0,
         "react/react-in-jsx-scope": "off",
         // allow jsx syntax in js files (for next.js project)
-       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }] //should add ".ts" if typescript project
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], //should add ".ts" if typescript project
+        "eol-last": 0,
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }]
     },
     "overrides": [
         {
@@ -49,5 +51,6 @@
             "jest": true
           }
         }
-    ]         
+    ] 
+            
 }
