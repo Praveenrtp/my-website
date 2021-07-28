@@ -1,10 +1,10 @@
 const initialState = {
-    list: []
-  };
-  
-  export default (state = initialState, action) => {
-    switch (action.type) {
-      default:
-        return state;
-    }
-  };
+  list: []
+};
+
+export default (state = initialState, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
