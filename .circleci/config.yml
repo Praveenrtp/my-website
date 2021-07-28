@@ -203,7 +203,7 @@ jobs:
                 }
               ]
             }
-            
+
 workflows:
   build_and_deploy:
     jobs:
@@ -221,25 +221,6 @@ workflows:
           requires: 
             - build
           filters: 
-            branches:
-              only:
-                - develop
-                - staging
-                - master
-      - terraform-validate:
-          requires:
-            - linting
-            - prettier
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - master
-      - terraform-plan-and-apply:
-          requires:
-            - terraform-validate
-          filters:
             branches:
               only:
                 - develop
@@ -272,16 +253,4 @@ workflows:
                 - develop
                 - staging
                 - master
-      - hold:
-          type: approval
-          requires:
-            - deploy-to-aws-cloudfront
-      - terraform-destroy:
-          requires:
-            - hold
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - master
+    
