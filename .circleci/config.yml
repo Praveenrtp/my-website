@@ -213,8 +213,10 @@ jobs:
           command: |
             cd Terraform/
             terraform init -backend=false
-            terraform validate
             terraform fmt -check
+            terraform validate
+            
+
 
   terraform-plan-and-apply:
     executor: terraform-executor
