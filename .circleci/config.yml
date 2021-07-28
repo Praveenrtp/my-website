@@ -215,6 +215,10 @@ jobs:
             terraform init -backend=false
             terraform fmt -check
             terraform validate
+            cd artifacts Terraform/
+            terraform init
+            terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
+            terraform plan
             
 
 
@@ -225,13 +229,13 @@ jobs:
       - attach_workspace:
           at: ./
       - *show-current-branch-name
-      - run:
-          name: Terraform Plan
-          command: |
-            cd artifacts Terraform/
-            terraform init
-            terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
-            terraform plan
+      # - run:
+      #     name: Terraform Plan
+      #     command: |
+      #       cd artifacts Terraform/
+      #       terraform init
+      #       terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
+      #       terraform plan
       - run:
           name: Terraform Apply
           command: |
