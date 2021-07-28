@@ -10,9 +10,7 @@ executors:
     docker:
       - image: 'cibuilds/base:latest'
     resource_class: small
-  terraform-executor:
-    docker:
-      - image: hashicorp/terraform:0.14.3
+  
 aliases:
   - &show-current-branch-name
     run:
@@ -61,14 +59,6 @@ jobs:
         - *restore_cache 
         - *install_dependencies
         - *save_cache
-        - run:
-            name: Copy Infrastructure Folder
-            command: |
-              cp -r Terraform artifacts/Terraform
-        - persist_to_workspace:
-            root: ./
-            paths:
-              - artifacts
         
   linting:  
     executor: app-executor
@@ -105,16 +95,14 @@ jobs:
       - run:
           name: Deploy to AWS s3
           command: |
-            AWS_BUCKET_NAME=$(cat artifacts/mywebsite_bucket_name.txt | sed 's/\"//g')
-            echo $AWS_BUCKET_NAME
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_NAME} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_PRODUCTION_BUCKET} --delete
             elif [ "${CIRCLE_BRANCH}" = "develop" ];
             then
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_NAME} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_DEV_BUCKET} --delete
             else 
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_NAME} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_STAGING_BUCKET} --delete
             fi
           
   deploy-to-aws-cloudfront:
@@ -132,16 +120,14 @@ jobs:
       - run:
           name: Deploy to AWS CloudFront
           command: |
-            CLOUDFRONT_DISTRIBUTION_ID=$(cat artifacts/cloudfront_distribution_id.txt | sed 's/\"//g')
-            echo $CLOUDFRONT_DISTRIBUTION_ID
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
-             aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths /\* 
+             aws cloudfront create-invalidation --distribution-id ${PRODUCTION_DISTRIBUTION_ID} --paths /\* 
             elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
-             aws cloudfront create-invalidation --distribution-id  ${CLOUDFRONT_DISTRIBUTION_ID} --paths /\* 
+             aws cloudfront create-invalidation --distribution-id  ${STAGING_DISTRIBUTION_ID} --paths /\* 
             else 
-             aws cloudfront create-invalidation --distribution-id  ${CLOUDFRONT_DISTRIBUTION_ID} --paths /\* 
+             aws cloudfront create-invalidation --distribution-id  ${DEV_DISTRIBUTION_ID} --paths /\* 
             fi
   
   notify-via-slack:
