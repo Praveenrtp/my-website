@@ -203,61 +203,7 @@ jobs:
                 }
               ]
             }
-  terraform-validate:
-    executor: terraform-executor
-    steps:
-      - checkout
-      - *show-current-branch-name
-      - run:
-          name: Terraform Validate & Format
-          command: |
-            cd Terraform/
-            terraform init -backend=false
-            terraform fmt -check
-            terraform validate
-            terraform plan
             
-
-
-  terraform-plan-and-apply:
-    executor: terraform-executor
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - *show-current-branch-name
-      - run:
-          name: Terraform Plan
-          command: |
-            cd artifacts Terraform/
-            terraform init
-            terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
-            terraform plan
-      - run:
-          name: Terraform Apply
-          command: |
-            cd artifacts Terraform/
-            terraform workspace select ${CIRCLE_BRANCH}
-            terraform apply --auto-approve
-            terraform output mywebsite_bucket_name > ../mywebsite_bucket_name.txt
-            terraform output cloudfront_distribution_id > ../cloudfront_distribution_id.txt
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - artifacts
-  terraform-destroy:
-    executor: terraform-executor
-    steps:
-      - checkout
-      - *show-current-branch-name
-      - run:
-          name: Terraform Destroy
-          command: |
-            cd Terraform/
-            terraform init
-            terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
-            terraform destroy --auto-approve
-      
 workflows:
   build_and_deploy:
     jobs:
