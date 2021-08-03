@@ -12,8 +12,10 @@ A react app built with redux and The Movie Database API. The app is deployed to 
 ## App Usage Locally
 
 * Clone the repository 
-* Run npm install
+* Run `npm install`
 * Create an account on https://www.themoviedb.org/ and obtain an API key.
 * Create a .env file in the root of the project and add
-* REACT_APP_API_SECRET=your api key
-* Run npm start
+```js
+REACT_APP_API_SECRET=your api key
+```
+* Run `npm start`
