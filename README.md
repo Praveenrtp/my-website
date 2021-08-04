@@ -1,4 +1,6 @@
-A react app built with redux and The Movie Database API. The app is deployed to AWS S3 and distributed with AWS cloudfront. Created AWS resources using Terraform.
+Designed and developed a React web based application built with redux which provides movie ratings, overview, crews and reviews by fetching real time data from the The Movie Database API. 
+The app is deployed to AWS S3 and distributed with AWS cloudFront using Continuous Integration/Continuous Delivery. 
+Created AWS Resources using Terraform.
 
 ## Tools
 * React
