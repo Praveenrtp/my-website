@@ -6,7 +6,7 @@ import store from './Redux/store';
 
 const App = () => {
   return (
-    <Provider store={store}>
+    <Provider store={store()}>
       <div className="app">
         <h1>Setup React Redux</h1>
       </div>
