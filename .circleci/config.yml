@@ -42,7 +42,7 @@ aliases:
         sudo apt-get install -y awscli
   - &Build_Project
     run:
-      name: Build Project npm
+      name: Build Project 
       command: |
         npm install
         npm run build
